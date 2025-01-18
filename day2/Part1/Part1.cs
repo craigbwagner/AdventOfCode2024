@@ -37,4 +37,72 @@ public class Part1
         return sequencesAsArrays;
     }
 
+    public static int CountSafeReports(List<int[]> sequencesAsArrays)
+    {
+        int safeReportsCounter = 0;
+
+        foreach (int[] reportSequence in sequencesAsArrays)
+        {
+            bool isSafe = false;
+            string reportPattern = CheckIncreasingOrDecreasing(reportSequence);
+            if (reportPattern == "increasing" || reportPattern == "decreasing")
+            {
+                isSafe = CheckGradualChange(reportSequence);
+            }
+
+            if (isSafe == true)
+            {
+                safeReportsCounter++;
+            }
+        }
+
+        return safeReportsCounter;
+    }
+
+    static string CheckIncreasingOrDecreasing(int[] reportSequence)
+    {
+        bool isIncreasing = true;
+        bool isDecreasing = true;
+
+        for (int i = 1; i < reportSequence.Length; i++)
+        {
+            if (isIncreasing == true && reportSequence[i] < reportSequence[i - 1])
+            {
+                isIncreasing = false;
+            }
+            else if (isDecreasing == true && reportSequence[i] > reportSequence[i - 1])
+            {
+                isDecreasing = false;
+            }
+        }
+
+        if (isIncreasing == true)
+        {
+            return "increasing";
+        }
+        else if (isDecreasing == true)
+        {
+            return "decreasing";
+        }
+        else
+        {
+            return "no pattern";
+        }
+    }
+
+    static bool CheckGradualChange(int[] reportSequence)
+    {
+        bool isGradual = true;
+
+        for (int i = 1; i < reportSequence.Length; i++)
+        {
+            int sequenceDifferential = Math.Abs(reportSequence[i] - reportSequence[i - 1]);
+            if (sequenceDifferential == 0 || sequenceDifferential > 3)
+            {
+                isGradual = false;
+            }
+        }
+
+        return isGradual;
+    }
 }
