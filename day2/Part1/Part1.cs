@@ -23,4 +23,18 @@ public class Part1
         return inputLines;
     }
 
+    public static List<int[]> SplitSequences(List<string> inputStrings)
+    {
+        List<int[]> sequencesAsArrays = [];
+
+        foreach (string sequence in inputStrings)
+        {
+            string[] splitSequence = sequence.Split(" ");
+            int[] splitSequenceAsInts = Array.ConvertAll(splitSequence, int.Parse);
+            sequencesAsArrays.Add(splitSequenceAsInts);
+        }
+
+        return sequencesAsArrays;
+    }
+
 }
